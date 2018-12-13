@@ -7,6 +7,7 @@
 <title>登录页面</title>
 <link rel="stylesheet" href="./css/login.css">
 </head>
+
 <body>
     <div class="login">
         <div class="header">
@@ -15,11 +16,18 @@
             </h1>
 
         </div>
+        <%
+            String username = "";
+            if(application.getAttribute("username") != null) {
+                username = (String) application.getAttribute("username");
+            }
+        %>
+        <%= username + "test"%>
         <form action="" method="post">
             <table>
                 <tr>
                     <td class="td1">用户名</td>
-                    <td><input type="text" class="input1" name="username"></td>
+                    <td><input type="text" class="input1" name="username" value="<%=username%>"></td>
                 </tr>
                 <tr>
                 <td class="td1">密码</td>

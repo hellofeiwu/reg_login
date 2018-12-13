@@ -2,6 +2,7 @@ package com.imooc.servlet;
 
 import com.imooc.domain.User;
 import com.imooc.utils.UploadUtils;
+import com.sun.glass.ui.Application;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -66,6 +67,8 @@ public class RegistServlet extends HttpServlet {
             List<User> userList = (List<User>) this.getServletContext().getAttribute("userList");
             userList.add(user);
             System.out.println(userList);
+            this.getServletContext().setAttribute("username", userMap.get("username"));
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
         } catch (FileUploadException e) {
             e.printStackTrace();
         }
