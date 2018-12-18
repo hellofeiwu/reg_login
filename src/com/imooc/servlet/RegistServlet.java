@@ -2,6 +2,7 @@ package com.imooc.servlet;
 
 import com.imooc.domain.User;
 import com.imooc.utils.UploadUtils;
+import com.sun.deploy.util.StringUtils;
 import com.sun.glass.ui.Application;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -32,18 +33,19 @@ public class RegistServlet extends HttpServlet {
             List<FileItem> fileItemList = servletFileUpload.parseRequest(request);
             List<String> hobbyList = new ArrayList<>();
             Map<String, String> userMap = new HashMap<>();
+            String url = "";
             for(FileItem item : fileItemList) {
                 if(item.isFormField()) {
                     String key = item.getFieldName();
                     String value = item.getString("UTF-8");
                     System.out.println(key + "===>" + value);
                     userMap.put(key, value);
-                }else {
+                }else if(!item.getName().isEmpty()) {
                     String fileName = item.getName();
                     String uuidFileName = UploadUtils.getUUIDFileName(fileName);
                     InputStream is = item.getInputStream();
                     String path = this.getServletContext().getRealPath("/upload");
-                    String url = path + "\\" + uuidFileName;
+                    url = path + "\\" + uuidFileName;
                     OutputStream os = new FileOutputStream(url);
                     int len = 0;
                     byte[] b = new byte[1024];
@@ -52,9 +54,8 @@ public class RegistServlet extends HttpServlet {
                     }
                     is.close();
                     os.close();
-
-                    userMap.put("path", url);
                 }
+                userMap.put("path", url);
             }
 
             List<User> userList = (List<User>) this.getServletContext().getAttribute("userList");
