@@ -23,7 +23,7 @@
             }
         %>
         <%= username + "test"%>
-        <form action="" method="post">
+        <form action="/reg_login/LoginServlet" method="post">
             <table>
                 <tr>
                     <td class="td1">用户名</td>

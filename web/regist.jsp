@@ -14,6 +14,7 @@
                 <a href="./login.jsp">登录</a> <a href="./regist.jsp">注册</a>
             </h1>
         </div>
+        <%= request.getAttribute("msg")%>
         <form action="/reg_login/RegistServlet" method="post" enctype="multipart/form-data">
             <table>
                 <tr>

@@ -56,6 +56,16 @@ public class RegistServlet extends HttpServlet {
                     userMap.put("path", url);
                 }
             }
+
+            List<User> userList = (List<User>) this.getServletContext().getAttribute("userList");
+            for(User item : userList) {
+                if(item.getUsername().equals(userMap.get("username"))) {
+                    request.setAttribute("msg", "username already exist");
+                    request.getRequestDispatcher("/regist.jsp").forward(request, response);
+                    return;
+                }
+            }
+
             User user = new User();
             user.setUsername(userMap.get("username"));
             user.setPassword(userMap.get("password"));
@@ -64,8 +74,8 @@ public class RegistServlet extends HttpServlet {
             user.setHobby(userMap.get("hobby"));
             user.setPath(userMap.get("path"));
 
-            List<User> userList = (List<User>) this.getServletContext().getAttribute("userList");
             userList.add(user);
+            this.getServletContext().setAttribute("userList", userList);
             System.out.println(userList);
             this.getServletContext().setAttribute("username", userMap.get("username"));
             response.sendRedirect(request.getContextPath() + "/login.jsp");
