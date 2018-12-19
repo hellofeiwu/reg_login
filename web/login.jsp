@@ -18,11 +18,13 @@
         </div>
         <%
             String username = "";
+            String msg = "";
+            msg = (String) request.getAttribute("msg");
             if(application.getAttribute("username") != null) {
                 username = (String) application.getAttribute("username");
             }
         %>
-        <%= username + "test"%>
+        <%= msg + "test"%>
         <form action="/reg_login/LoginServlet" method="post">
             <table>
                 <tr>
