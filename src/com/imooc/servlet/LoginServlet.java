@@ -20,6 +20,7 @@ public class LoginServlet extends HttpServlet {
         for(User item : userList) {
             if(item.getUsername().equals(username)) {
                 if(item.getPassword().equals(password)) {
+                    request.getSession().setAttribute("user", item);
                     response.sendRedirect(request.getContextPath() + "/success.jsp");
                     return;
                 }
