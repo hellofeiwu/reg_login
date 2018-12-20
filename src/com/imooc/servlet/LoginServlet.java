@@ -3,6 +3,7 @@ package com.imooc.servlet;
 import com.imooc.domain.User;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,12 @@ public class LoginServlet extends HttpServlet {
         for(User item : userList) {
             if(item.getUsername().equals(username)) {
                 if(item.getPassword().equals(password)) {
+                    if("true".equals(request.getParameter("remember"))) {
+                        Cookie cookie = new Cookie("username", item.getUsername());
+                        cookie.setPath("/reg_login");
+                        cookie.setMaxAge(60*60);
+                        response.addCookie(cookie);
+                    }
                     request.getSession().setAttribute("user", item);
                     response.sendRedirect(request.getContextPath() + "/success.jsp");
                     return;

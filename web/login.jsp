@@ -1,5 +1,6 @@
+<%@ page import="com.imooc.utils.CookieUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,9 +21,16 @@
             String username = "";
             String msg = "";
             msg = (String) request.getAttribute("msg");
+
+            Cookie[] cookies = request.getCookies();
+            if(CookieUtils.getCookie(cookies, "username") != null) {
+                username = CookieUtils.getCookie(cookies, "username").getValue();
+            }
+            
             if(application.getAttribute("username") != null) {
                 username = (String) application.getAttribute("username");
             }
+
         %>
         <%= msg + "test"%>
         <form action="/reg_login/LoginServlet" method="post">
